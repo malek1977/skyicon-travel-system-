@@ -1,0 +1,671 @@
+import { useState } from 'react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
+import { Button } from '@/components/ui/button.jsx'
+import { Badge } from '@/components/ui/badge.jsx'
+import { Input } from '@/components/ui/input.jsx'
+import { Label } from '@/components/ui/label.jsx'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx'
+import { 
+  MapPin, 
+  Users, 
+  Calendar, 
+  FileText, 
+  Shield,
+  Heart,
+  Plane,
+  Hotel,
+  Bus,
+  Utensils,
+  Star,
+  Clock,
+  CheckCircle,
+  AlertCircle,
+  Plus,
+  Search,
+  Filter,
+  Edit,
+  Eye,
+  Download,
+  Upload,
+  UserCheck,
+  Clipboard
+} from 'lucide-react'
+
+const HajjUmrahModule = () => {
+  const [activeTab, setActiveTab] = useState('overview')
+
+  const hajjUmrahStats = [
+    { title: 'الحجاج المسجلين', value: '456', change: '+22.1%', icon: Users, color: 'bg-green-500' },
+    { title: 'المعتمرين', value: '789', change: '+18.5%', icon: MapPin, color: 'bg-blue-500' },
+    { title: 'الحزم المتاحة', value: '12', change: '+15.3%', icon: Star, color: 'bg-purple-500' },
+    { title: 'التصاريح المعتمدة', value: '234', change: '+25.8%', icon: Shield, color: 'bg-orange-500' }
+  ]
+
+  const hajjPackages = [
+    {
+      id: 'HAJJ-001',
+      name: 'حج التميز الذهبي',
+      type: 'حج',
+      duration: '15 يوم',
+      price: '45,000',
+      capacity: 50,
+      registered: 42,
+      rating: 4.9,
+      includes: ['طيران', 'إقامة 5 نجوم', 'مواصلات VIP', 'وجبات فاخرة', 'مرشد ديني'],
+      status: 'available'
+    },
+    {
+      id: 'HAJJ-002',
+      name: 'حج الراحة الفضي',
+      type: 'حج',
+      duration: '12 يوم',
+      price: '32,000',
+      capacity: 80,
+      registered: 75,
+      rating: 4.7,
+      includes: ['طيران', 'إقامة 4 نجوم', 'مواصلات مكيفة', 'وجبات', 'مرشد ديني'],
+      status: 'almost_full'
+    },
+    {
+      id: 'UMRAH-001',
+      name: 'عمرة رمضان المباركة',
+      type: 'عمرة',
+      duration: '7 أيام',
+      price: '12,000',
+      capacity: 100,
+      registered: 89,
+      rating: 4.8,
+      includes: ['طيران', 'إقامة قريبة من الحرم', 'مواصلات', 'وجبات', 'برنامج ديني'],
+      status: 'available'
+    },
+    {
+      id: 'UMRAH-002',
+      name: 'عمرة العشر الأواخر',
+      type: 'عمرة',
+      duration: '10 أيام',
+      price: '18,000',
+      capacity: 60,
+      registered: 60,
+      rating: 4.9,
+      includes: ['طيران', 'إقامة فاخرة', 'مواصلات VIP', 'وجبات متنوعة', 'برنامج ديني شامل'],
+      status: 'full'
+    }
+  ]
+
+  const recentRegistrations = [
+    {
+      id: 'REG-001',
+      name: 'أحمد محمد علي',
+      package: 'حج التميز الذهبي',
+      type: 'حج',
+      registrationDate: '2025-01-08',
+      status: 'approved',
+      documents: 'complete',
+      medicalCheck: 'passed'
+    },
+    {
+      id: 'REG-002',
+      name: 'فاطمة أحمد سالم',
+      package: 'عمرة رمضان المباركة',
+      type: 'عمرة',
+      registrationDate: '2025-01-07',
+      status: 'pending',
+      documents: 'incomplete',
+      medicalCheck: 'pending'
+    },
+    {
+      id: 'REG-003',
+      name: 'محمد سعد العتيبي',
+      package: 'حج الراحة الفضي',
+      type: 'حج',
+      registrationDate: '2025-01-06',
+      status: 'approved',
+      documents: 'complete',
+      medicalCheck: 'passed'
+    },
+    {
+      id: 'REG-004',
+      name: 'نورا خالد أحمد',
+      package: 'عمرة العشر الأواخر',
+      type: 'عمرة',
+      registrationDate: '2025-01-05',
+      status: 'rejected',
+      documents: 'incomplete',
+      medicalCheck: 'failed'
+    }
+  ]
+
+  const requirements = [
+    {
+      category: 'الوثائق المطلوبة',
+      items: [
+        { name: 'جواز السفر ساري المفعول', required: true, status: 'mandatory' },
+        { name: 'صورة شخصية حديثة', required: true, status: 'mandatory' },
+        { name: 'شهادة التطعيم', required: true, status: 'mandatory' },
+        { name: 'تصريح الحج/العمرة', required: true, status: 'mandatory' }
+      ]
+    },
+    {
+      category: 'الفحوصات الطبية',
+      items: [
+        { name: 'فحص كوفيد-19', required: true, status: 'mandatory' },
+        { name: 'فحص الحمى الصفراء', required: true, status: 'mandatory' },
+        { name: 'فحص شامل للأمراض المزمنة', required: false, status: 'recommended' },
+        { name: 'تقرير طبي شامل', required: false, status: 'recommended' }
+      ]
+    }
+  ]
+
+  const getStatusBadge = (status) => {
+    switch(status) {
+      case 'approved':
+        return <Badge className="bg-green-100 text-green-800">معتمد</Badge>
+      case 'pending':
+        return <Badge className="bg-yellow-100 text-yellow-800">قيد المراجعة</Badge>
+      case 'rejected':
+        return <Badge className="bg-red-100 text-red-800">مرفوض</Badge>
+      case 'available':
+        return <Badge className="bg-blue-100 text-blue-800">متاح</Badge>
+      case 'almost_full':
+        return <Badge className="bg-orange-100 text-orange-800">شبه مكتمل</Badge>
+      case 'full':
+        return <Badge className="bg-red-100 text-red-800">مكتمل</Badge>
+      default:
+        return <Badge variant="secondary">غير محدد</Badge>
+    }
+  }
+
+  const getStatusIcon = (status) => {
+    switch(status) {
+      case 'approved':
+        return <CheckCircle className="w-4 h-4 text-green-500" />
+      case 'pending':
+        return <Clock className="w-4 h-4 text-yellow-500" />
+      case 'rejected':
+        return <AlertCircle className="w-4 h-4 text-red-500" />
+      default:
+        return <Clock className="w-4 h-4 text-gray-500" />
+    }
+  }
+
+  const getDocumentStatus = (status) => {
+    switch(status) {
+      case 'complete':
+        return <Badge className="bg-green-100 text-green-800">مكتملة</Badge>
+      case 'incomplete':
+        return <Badge className="bg-red-100 text-red-800">ناقصة</Badge>
+      default:
+        return <Badge variant="secondary">غير محدد</Badge>
+    }
+  }
+
+  const getMedicalStatus = (status) => {
+    switch(status) {
+      case 'passed':
+        return <Badge className="bg-green-100 text-green-800">نجح</Badge>
+      case 'failed':
+        return <Badge className="bg-red-100 text-red-800">فشل</Badge>
+      case 'pending':
+        return <Badge className="bg-yellow-100 text-yellow-800">معلق</Badge>
+      default:
+        return <Badge variant="secondary">غير محدد</Badge>
+    }
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* إحصائيات الحج والعمرة */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {hajjUmrahStats.map((stat, index) => {
+          const Icon = stat.icon
+          return (
+            <Card key={index} className="hover:shadow-lg transition-shadow duration-200">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">{stat.title}</p>
+                    <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
+                    <div className="flex items-center mt-2">
+                      <span className="text-sm text-green-600 font-medium">{stat.change}</span>
+                    </div>
+                  </div>
+                  <div className={`w-12 h-12 rounded-lg ${stat.color} flex items-center justify-center`}>
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )
+        })}
+      </div>
+
+      {/* التبويبات الرئيسية */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <TabsList className="grid w-full grid-cols-5">
+          <TabsTrigger value="overview">نظرة عامة</TabsTrigger>
+          <TabsTrigger value="packages">الحزم</TabsTrigger>
+          <TabsTrigger value="registrations">التسجيلات</TabsTrigger>
+          <TabsTrigger value="requirements">المتطلبات</TabsTrigger>
+          <TabsTrigger value="documents">الوثائق</TabsTrigger>
+        </TabsList>
+
+        {/* نظرة عامة */}
+        <TabsContent value="overview" className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* التسجيلات الأخيرة */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  <span className="flex items-center">
+                    <Users className="w-5 h-5 ml-2" />
+                    التسجيلات الأخيرة
+                  </span>
+                  <Button size="sm" variant="outline">
+                    <Plus className="w-4 h-4 ml-1" />
+                    تسجيل جديد
+                  </Button>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {recentRegistrations.slice(0, 4).map((registration) => (
+                    <div key={registration.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center space-x-3 space-x-reverse">
+                        {getStatusIcon(registration.status)}
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">{registration.name}</p>
+                          <p className="text-xs text-gray-500">
+                            {registration.package} • {registration.registrationDate}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-left">
+                        {getStatusBadge(registration.status)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* الحزم المتاحة */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Star className="w-5 h-5 ml-2" />
+                  الحزم المتاحة
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {hajjPackages.slice(0, 4).map((pkg) => (
+                    <div key={pkg.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{pkg.name}</p>
+                        <p className="text-xs text-gray-500">
+                          {pkg.type} • {pkg.duration} • {pkg.registered}/{pkg.capacity} مسجل
+                        </p>
+                      </div>
+                      <div className="text-left">
+                        <p className="text-sm font-bold text-gray-900">{pkg.price} ريال</p>
+                        {getStatusBadge(pkg.status)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* إحصائيات سريعة */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">موسم الحج 2025</p>
+                    <p className="text-2xl font-bold text-gray-900 mt-1">498</p>
+                    <p className="text-xs text-gray-500">حاج مسجل</p>
+                  </div>
+                  <div className="w-12 h-12 rounded-lg bg-green-500 flex items-center justify-center">
+                    <MapPin className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">عمرة رمضان</p>
+                    <p className="text-2xl font-bold text-gray-900 mt-1">789</p>
+                    <p className="text-xs text-gray-500">معتمر مسجل</p>
+                  </div>
+                  <div className="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center">
+                    <Star className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">التصاريح المعتمدة</p>
+                    <p className="text-2xl font-bold text-gray-900 mt-1">1,234</p>
+                    <p className="text-xs text-gray-500">تصريح نشط</p>
+                  </div>
+                  <div className="w-12 h-12 rounded-lg bg-purple-500 flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">الفحوصات الطبية</p>
+                    <p className="text-2xl font-bold text-gray-900 mt-1">987</p>
+                    <p className="text-xs text-gray-500">فحص مكتمل</p>
+                  </div>
+                  <div className="w-12 h-12 rounded-lg bg-orange-500 flex items-center justify-center">
+                    <Heart className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {/* إدارة الحزم */}
+        <TabsContent value="packages" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <span>حزم الحج والعمرة</span>
+                <Button size="sm">
+                  <Plus className="w-4 h-4 ml-1" />
+                  حزمة جديدة
+                </Button>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {hajjPackages.map((pkg) => (
+                  <Card key={pkg.id} className="hover:shadow-lg transition-shadow duration-200">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <h3 className="font-bold text-gray-900 text-lg">{pkg.name}</h3>
+                          <p className="text-sm text-gray-600">{pkg.type} • {pkg.duration}</p>
+                        </div>
+                        <div className="text-left">
+                          <div className="flex items-center space-x-1 space-x-reverse mb-1">
+                            <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                            <span className="text-sm font-medium">{pkg.rating}</span>
+                          </div>
+                          {getStatusBadge(pkg.status)}
+                        </div>
+                      </div>
+
+                      <div className="space-y-3 mb-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-gray-600">السعر</span>
+                          <span className="text-lg font-bold text-blue-600">{pkg.price} ريال</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-gray-600">المسجلين</span>
+                          <span className="text-sm font-medium">{pkg.registered}/{pkg.capacity}</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div 
+                            className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                            style={{ width: `${(pkg.registered / pkg.capacity) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2 mb-4">
+                        <p className="text-sm font-medium text-gray-700">يشمل:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {pkg.includes.map((item, index) => (
+                            <Badge key={index} variant="secondary" className="text-xs">
+                              {item}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-2 space-x-reverse">
+                        <Button size="sm" variant="outline" className="flex-1">
+                          <Edit className="w-4 h-4 ml-1" />
+                          تعديل
+                        </Button>
+                        <Button size="sm" variant="outline" className="flex-1">
+                          <Eye className="w-4 h-4 ml-1" />
+                          عرض
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* إدارة التسجيلات */}
+        <TabsContent value="registrations" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>إدارة التسجيلات</CardTitle>
+              <CardDescription>عرض وإدارة جميع تسجيلات الحج والعمرة</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {/* أدوات البحث والتصفية */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-4 space-x-reverse">
+                  <div className="relative">
+                    <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Input placeholder="البحث في التسجيلات..." className="pr-10 w-64" />
+                  </div>
+                  <Button variant="outline" size="sm">
+                    <Filter className="w-4 h-4 ml-1" />
+                    تصفية
+                  </Button>
+                </div>
+                <Button size="sm">
+                  <Plus className="w-4 h-4 ml-1" />
+                  تسجيل جديد
+                </Button>
+              </div>
+
+              {/* جدول التسجيلات */}
+              <div className="border rounded-lg overflow-hidden">
+                <table className="w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-right text-sm font-medium text-gray-900">رقم التسجيل</th>
+                      <th className="px-4 py-3 text-right text-sm font-medium text-gray-900">الاسم</th>
+                      <th className="px-4 py-3 text-right text-sm font-medium text-gray-900">الحزمة</th>
+                      <th className="px-4 py-3 text-right text-sm font-medium text-gray-900">النوع</th>
+                      <th className="px-4 py-3 text-right text-sm font-medium text-gray-900">الوثائق</th>
+                      <th className="px-4 py-3 text-right text-sm font-medium text-gray-900">الفحص الطبي</th>
+                      <th className="px-4 py-3 text-right text-sm font-medium text-gray-900">الحالة</th>
+                      <th className="px-4 py-3 text-right text-sm font-medium text-gray-900">الإجراءات</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {recentRegistrations.map((registration) => (
+                      <tr key={registration.id} className="hover:bg-gray-50">
+                        <td className="px-4 py-3 text-sm font-medium text-gray-900">{registration.id}</td>
+                        <td className="px-4 py-3 text-sm text-gray-900">{registration.name}</td>
+                        <td className="px-4 py-3 text-sm text-gray-600">{registration.package}</td>
+                        <td className="px-4 py-3 text-sm text-gray-600">{registration.type}</td>
+                        <td className="px-4 py-3">{getDocumentStatus(registration.documents)}</td>
+                        <td className="px-4 py-3">{getMedicalStatus(registration.medicalCheck)}</td>
+                        <td className="px-4 py-3">{getStatusBadge(registration.status)}</td>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center space-x-2 space-x-reverse">
+                            <Button size="sm" variant="ghost">
+                              <Eye className="w-4 h-4" />
+                            </Button>
+                            <Button size="sm" variant="ghost">
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button size="sm" variant="ghost">
+                              <UserCheck className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* المتطلبات الحكومية */}
+        <TabsContent value="requirements" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Clipboard className="w-5 h-5 ml-2" />
+                المتطلبات الحكومية
+              </CardTitle>
+              <CardDescription>قائمة بجميع المتطلبات والوثائق المطلوبة</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {requirements.map((category, categoryIndex) => (
+                  <div key={categoryIndex}>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">{category.category}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {category.items.map((item, itemIndex) => (
+                        <Card key={itemIndex} className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-3 space-x-reverse">
+                              <div className={`w-3 h-3 rounded-full ${
+                                item.status === 'mandatory' ? 'bg-red-500' : 'bg-yellow-500'
+                              }`} />
+                              <span className="text-sm font-medium text-gray-900">{item.name}</span>
+                            </div>
+                            <Badge variant={item.status === 'mandatory' ? 'destructive' : 'secondary'}>
+                              {item.status === 'mandatory' ? 'إجباري' : 'مستحب'}
+                            </Badge>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* إدارة الوثائق */}
+        <TabsContent value="documents" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <FileText className="w-5 h-5 ml-2" />
+                  رفع الوثائق
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="document-type">نوع الوثيقة</Label>
+                    <select className="w-full p-2 border border-gray-300 rounded-md">
+                      <option>جواز السفر</option>
+                      <option>صورة شخصية</option>
+                      <option>شهادة التطعيم</option>
+                      <option>تصريح الحج/العمرة</option>
+                    </select>
+                  </div>
+                  <div>
+                    <Label htmlFor="customer-id">رقم العميل</Label>
+                    <Input id="customer-id" placeholder="أدخل رقم العميل" />
+                  </div>
+                  <Button className="w-full">
+                    <Upload className="w-4 h-4 ml-2" />
+                    رفع الوثيقة
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Shield className="w-5 h-5 ml-2" />
+                  التصاريح الحكومية
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                    <span className="text-sm font-medium">تصاريح معتمدة</span>
+                    <span className="text-lg font-bold text-green-600">234</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
+                    <span className="text-sm font-medium">قيد المراجعة</span>
+                    <span className="text-lg font-bold text-yellow-600">45</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+                    <span className="text-sm font-medium">مرفوضة</span>
+                    <span className="text-lg font-bold text-red-600">12</span>
+                  </div>
+                  <Button className="w-full" variant="outline">
+                    <Download className="w-4 h-4 ml-1" />
+                    تحميل التقرير
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Heart className="w-5 h-5 ml-2" />
+                  الفحوصات الطبية
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                    <span className="text-sm font-medium">فحوصات مكتملة</span>
+                    <span className="text-lg font-bold text-green-600">987</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
+                    <span className="text-sm font-medium">قيد الانتظار</span>
+                    <span className="text-lg font-bold text-yellow-600">67</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+                    <span className="text-sm font-medium">غير مطابقة</span>
+                    <span className="text-lg font-bold text-red-600">23</span>
+                  </div>
+                  <Button className="w-full" variant="outline">
+                    <Calendar className="w-4 h-4 ml-1" />
+                    جدولة فحص
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
+  )
+}
+
+export default HajjUmrahModule
+
