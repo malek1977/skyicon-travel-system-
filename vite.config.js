@@ -6,7 +6,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react(),
-  base: 'skyicon-travel-system-/',
+  base: '/skyicon-travel-system-/',
     react(),
     tailwindcss()
   ],
