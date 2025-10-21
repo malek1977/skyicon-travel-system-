@@ -126,7 +126,7 @@ const AccountingModule = () => {
                     <FileText className="w-5 h-5 ml-2" />
                     الفواتير الأخيرة
                   </span>
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="outline" onClick={() => alert("تم الضغط!")}>
                     <Plus className="w-4 h-4 ml-1" />
                     فاتورة جديدة
                   </Button>
@@ -201,17 +201,17 @@ const AccountingModule = () => {
                     <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                     <Input placeholder="البحث في الفواتير..." className="pr-10 w-64" />
                   </div>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={() => alert("تم الضغط!")}>
                     <Filter className="w-4 h-4 ml-1" />
                     تصفية
                   </Button>
                 </div>
                 <div className="flex items-center space-x-2 space-x-reverse">
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="outline" onClick={() => alert("تم الضغط!")}>
                     <Download className="w-4 h-4 ml-1" />
                     تصدير
                   </Button>
-                  <Button size="sm">
+                  <Button size="sm" onClick={() => alert("تم الضغط!")}>
                     <Plus className="w-4 h-4 ml-1" />
                     فاتورة جديدة
                   </Button>
@@ -243,13 +243,13 @@ const AccountingModule = () => {
                         <td className="px-4 py-3">{getStatusBadge(invoice.status)}</td>
                         <td className="px-4 py-3">
                           <div className="flex items-center space-x-2 space-x-reverse">
-                            <Button size="sm" variant="ghost">
+                            <Button size="sm" variant="ghost" onClick={() => alert("تم الضغط!")}>
                               <Eye className="w-4 h-4" />
                             </Button>
-                            <Button size="sm" variant="ghost">
+                            <Button size="sm" variant="ghost" onClick={() => alert("تم الضغط!")}>
                               <Edit className="w-4 h-4" />
                             </Button>
-                            <Button size="sm" variant="ghost">
+                            <Button size="sm" variant="ghost" onClick={() => alert("تم الضغط!")}>
                               <Trash2 className="w-4 h-4" />
                             </Button>
                           </div>
@@ -298,7 +298,7 @@ const AccountingModule = () => {
                       <option>تحويل بنكي</option>
                     </select>
                   </div>
-                  <Button className="w-full">
+                  <Button className="w-full" onClick={() => alert("تم الضغط!")}>
                     <CreditCard className="w-4 h-4 ml-2" />
                     معالجة الدفع
                   </Button>
@@ -353,7 +353,7 @@ const AccountingModule = () => {
                     <CardContent className="p-4">
                       <h3 className="font-medium text-gray-900 mb-2">{report.name}</h3>
                       <p className="text-sm text-gray-600 mb-3">{report.description}</p>
-                      <Button size="sm" variant="outline" className="w-full">
+                      <Button size="sm" variant="outline" className="w-full" onClick={() => alert("تم الضغط!")}>
                         <Download className="w-4 h-4 ml-1" />
                         تحميل
                       </Button>
@@ -406,7 +406,7 @@ const AccountingModule = () => {
                   </div>
                 </div>
 
-                <Button>حفظ الإعدادات</Button>
+                <Button onClick={() => saveSettings()}>حفظ الإعدادات</Button>
               </div>
             </CardContent>
           </Card>

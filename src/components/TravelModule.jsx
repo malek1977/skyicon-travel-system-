@@ -196,7 +196,7 @@ const TravelModule = () => {
                     <Plane className="w-5 h-5 ml-2" />
                     الحجوزات الأخيرة
                   </span>
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="outline" onClick={() => alert("تم الضغط!")}>
                     <Plus className="w-4 h-4 ml-1" />
                     حجز جديد
                   </Button>
@@ -298,7 +298,7 @@ const TravelModule = () => {
                           <p className="text-lg font-bold text-blue-600">{pkg.price} ريال</p>
                           <p className="text-xs text-gray-500">{pkg.bookings} حجز</p>
                         </div>
-                        <Button size="sm">احجز الآن</Button>
+                        <Button size="sm" onClick={() => createNew()}>احجز الآن</Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -323,12 +323,12 @@ const TravelModule = () => {
                     <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                     <Input placeholder="البحث في الحجوزات..." className="pr-10 w-64" />
                   </div>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={() => alert("تم الضغط!")}>
                     <Filter className="w-4 h-4 ml-1" />
                     تصفية
                   </Button>
                 </div>
-                <Button size="sm">
+                <Button size="sm" onClick={() => alert("تم الضغط!")}>
                   <Plus className="w-4 h-4 ml-1" />
                   حجز جديد
                 </Button>
@@ -361,13 +361,13 @@ const TravelModule = () => {
                         <td className="px-4 py-3">{getStatusBadge(booking.status)}</td>
                         <td className="px-4 py-3">
                           <div className="flex items-center space-x-2 space-x-reverse">
-                            <Button size="sm" variant="ghost">
+                            <Button size="sm" variant="ghost" onClick={() => alert("تم الضغط!")}>
                               <Eye className="w-4 h-4" />
                             </Button>
-                            <Button size="sm" variant="ghost">
+                            <Button size="sm" variant="ghost" onClick={() => alert("تم الضغط!")}>
                               <Edit className="w-4 h-4" />
                             </Button>
-                            <Button size="sm" variant="ghost">
+                            <Button size="sm" variant="ghost" onClick={() => alert("تم الضغط!")}>
                               <Trash2 className="w-4 h-4" />
                             </Button>
                           </div>
@@ -387,7 +387,7 @@ const TravelModule = () => {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>البرامج السياحية</span>
-                <Button size="sm">
+                <Button size="sm" onClick={() => alert("تم الضغط!")}>
                   <Plus className="w-4 h-4 ml-1" />
                   برنامج جديد
                 </Button>
@@ -425,11 +425,11 @@ const TravelModule = () => {
                         </div>
                       </div>
                       <div className="flex items-center space-x-2 space-x-reverse">
-                        <Button size="sm" variant="outline" className="flex-1">
+                        <Button size="sm" variant="outline" className="flex-1" onClick={() => alert("تم الضغط!")}>
                           <Edit className="w-4 h-4 ml-1" />
                           تعديل
                         </Button>
-                        <Button size="sm" variant="outline" className="flex-1">
+                        <Button size="sm" variant="outline" className="flex-1" onClick={() => alert("تم الضغط!")}>
                           <Eye className="w-4 h-4 ml-1" />
                           عرض
                         </Button>
@@ -448,7 +448,7 @@ const TravelModule = () => {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>إدارة الوجهات</span>
-                <Button size="sm">
+                <Button size="sm" onClick={() => alert("تم الضغط!")}>
                   <Plus className="w-4 h-4 ml-1" />
                   وجهة جديدة
                 </Button>
@@ -477,11 +477,11 @@ const TravelModule = () => {
                         <Badge variant="outline">نشط</Badge>
                       </div>
                       <div className="flex items-center space-x-2 space-x-reverse">
-                        <Button size="sm" variant="outline" className="flex-1">
+                        <Button size="sm" variant="outline" className="flex-1" onClick={() => alert("تم الضغط!")}>
                           <Edit className="w-4 h-4 ml-1" />
                           تعديل
                         </Button>
-                        <Button size="sm" variant="outline" className="flex-1">
+                        <Button size="sm" variant="outline" className="flex-1" onClick={() => alert("تم الضغط!")}>
                           <Eye className="w-4 h-4 ml-1" />
                           عرض
                         </Button>
@@ -516,7 +516,7 @@ const TravelModule = () => {
                     <span className="font-medium">156</span>
                   </div>
                 </div>
-                <Button className="w-full mt-4" variant="outline">إدارة الحجوزات</Button>
+                <Button className="w-full mt-4" variant="outline" onClick={() => openManagement()}>إدارة الحجوزات</Button>
               </CardContent>
             </Card>
 
@@ -539,7 +539,7 @@ const TravelModule = () => {
                     <span className="font-medium">12</span>
                   </div>
                 </div>
-                <Button className="w-full mt-4" variant="outline">إدارة الأسطول</Button>
+                <Button className="w-full mt-4" variant="outline" onClick={() => openManagement()}>إدارة الأسطول</Button>
               </CardContent>
             </Card>
 
@@ -562,7 +562,7 @@ const TravelModule = () => {
                     <span className="font-medium">67</span>
                   </div>
                 </div>
-                <Button className="w-full mt-4" variant="outline">إدارة الجولات</Button>
+                <Button className="w-full mt-4" variant="outline" onClick={() => openManagement()}>إدارة الجولات</Button>
               </CardContent>
             </Card>
           </div>
