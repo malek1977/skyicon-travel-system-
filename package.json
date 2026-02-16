@@ -1,6 +1,11 @@
 {
+{
   "name": "skyicon-travel-system",
-  "version": "1.0.0",
+  "packageManager": "pnpm@9",
+  "dependencies": {
+    ...
+  }
+}
   "description": "Travel System Project",
   "homepage": "https://maleel1977.github.io/skyicon-travel-system",
   "scripts": {
